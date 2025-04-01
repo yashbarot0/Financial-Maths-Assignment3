@@ -8,9 +8,9 @@ double european_call_price(int n, double S0, double K, double sigma, double r) {
     const gsl_rng_type * T;
     gsl_rng * rng;
 
-    gsl_rng_env_setup();
+    gsl_rng_env_setup(); // Set up the GSL environment
     T = gsl_rng_default;
-    rng = gsl_rng_alloc(T);
+    rng = gsl_rng_alloc(T); // Allocate memory for the random number generator
     gsl_rng_set(rng, 0); // Set seed for reproducibility
 
     double sum = 0.0;
@@ -22,14 +22,14 @@ double european_call_price(int n, double S0, double K, double sigma, double r) {
         sum += discounted_payoff;
     }
 
-    gsl_rng_free(rng);
+    gsl_rng_free(rng); // Free the memory allocated for the random number generator
     return sum / n;
 }
 
 int main() {
     int n = 1000000; // Number of Monte Carlo samples
     double S0 = 100.0; // Spot price
-    double K = 100.0; // Strike price
+    double K = 100.0; // Strike price 
     double sigma = 0.2; // Volatility
     double r = 0.05; // Risk-free rate
 
@@ -38,7 +38,7 @@ int main() {
     double price = european_call_price(n, S0, K, sigma, r);
 
     auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed = end - start;
+    std::chrono::duration<double> elapsed = end - start; // Calculate elapsed time
 
     std::cout << "European Call Option Price: " << price << std::endl;
     std::cout << "Execution Time: " << elapsed.count() << " seconds" << std::endl;
